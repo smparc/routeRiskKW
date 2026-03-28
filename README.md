@@ -43,6 +43,23 @@ streamlit run app.py
 Should open automatically otherwise open
 `http://localhost:8501`.
 
+## model training
+
+Run the training script after the heatmap pipeline has been built and `Traffic_Collisions_Updated.csv` is present:
+
+```bash
+python train_model.py
+```
+
+What it does:
+
+1. Loads `Traffic_Collisions_Updated.csv`, drops `ACCIDENTDATE` and `zone_id`
+2. Splits 80/20 stratified train/test
+3. Trains `RandomForest` and `GradientBoosting` in sequence
+4. Prints accuracy, ROC-AUC, classification report, and confusion matrix for each
+5. Prints top 15 feature importances from Random Forest
+6. Saves the best model (by ROC-AUC) to `artifacts/collision_model.pkl`, feature list to `artifacts/model_features.pkl`, and a summary JSON to `artifacts/model_summary.json`
+
 ## some things maybe to remember
 
 - The map uses the raw collision CSV as the source of truth because the legacy
