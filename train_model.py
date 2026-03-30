@@ -3,6 +3,7 @@ import os
 from datetime import datetime, timezone
 
 import joblib
+import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import (
@@ -10,6 +11,7 @@ from sklearn.metrics import (
     classification_report,
     confusion_matrix,
     roc_auc_score,
+    roc_curve,
 )
 from sklearn.model_selection import RandomizedSearchCV, cross_val_score, train_test_split
 
@@ -90,6 +92,21 @@ def main():
     print(classification_report(y_test, y_pred, target_names=["No Crash", "Crash"]))
     print("  Confusion Matrix:")
     print(confusion_matrix(y_test, y_pred))
+
+    # ROC curve
+    fpr, tpr, _ = roc_curve(y_test, y_prob)
+    plt.figure(figsize=(7, 5))
+    plt.plot(fpr, tpr, color="steelblue", lw=2, label=f"GradientBoosting (AUC = {auc:.4f})")
+    plt.plot([0, 1], [0, 1], color="gray", linestyle="--", lw=1)
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("ROC Curve — Gradient Boosting")
+    plt.legend(loc="lower right")
+    plt.tight_layout()
+    roc_path = os.path.join(ARTIFACTS_DIR, "roc_curve.png")
+    plt.savefig(roc_path, dpi=150)
+    plt.show()
+    print(f"  ROC curve saved -> {roc_path}")
 
     # ------------------------------------------------------------------ #
     # SAVE                                                                 #
