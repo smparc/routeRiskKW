@@ -1,4 +1,4 @@
-# MSE 446 — KW Traffic Collision Risk Predictor
+# routeRIskKW — KW Traffic Collision Risk Predictor
 
 A machine learning project that predicts high-risk areas for traffic collisions in the Kitchener-Waterloo region. The system builds geographically balanced street zones from OSM data, assigns historical collision records to those zones, generates synthetic non-collision records to balance the dataset, trains classification models, and visualizes risk as an interactive heatmap.
 
